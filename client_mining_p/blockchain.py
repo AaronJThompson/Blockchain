@@ -108,9 +108,11 @@ blockchain = Blockchain()
 @app.route('/mine', methods=['POST'])
 def mine():
     data = request.get_json()
-    if (not "id" in data or not "proof" in data):
+    if not "id" in data or not "proof" in data:
       return jsonify({"message": "ID or Proof not included"}), 400
-    return jsonify(response), 200
+    elif data["previous_hash"] != blockchain.last_block["previous_hash"]:
+      return jsonify({"message": "Previous hash does not match"}), 400
+      return jsonify(response), 200
 
 
 @app.route('/chain', methods=['GET'])
