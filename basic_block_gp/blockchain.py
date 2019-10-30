@@ -2,6 +2,7 @@ import hashlib
 import json
 from time import time
 from uuid import uuid4
+import os
 
 from flask import Flask, jsonify, request
 
@@ -149,4 +150,7 @@ def full_chain():
 
 # Run the program on port 5000
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    port = 5000
+    host = '0.0.0.0'
+    os.system(f"start http://127.0.0.1:{port}")
+    app.run(host=host, port=port)
