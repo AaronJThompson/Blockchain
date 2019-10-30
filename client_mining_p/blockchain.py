@@ -110,9 +110,12 @@ def mine():
     data = request.get_json()
     if not "id" in data or not "proof" in data:
       return jsonify({"message": "ID or Proof not included"}), 400
-    elif data["previous_hash"] != blockchain.last_block["previous_hash"]:
+    elif data["previous_hash"] != blockchain.hash(blockchain.last_block):
       return jsonify({"message": "Previous hash does not match"}), 400
-      return jsonify(response), 200
+    elif not blockchain.valid_proof(json.dumps(blockchain.last_block, sort_keys=True).encode(), data["proof"]):
+      return jsonify({"message": "Incorrect proof"}), 400
+    blockchain.chain.append(data)
+    return jsonify({"message": "success"}), 200
 
 
 @app.route('/chain', methods=['GET'])
