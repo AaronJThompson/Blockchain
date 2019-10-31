@@ -115,7 +115,7 @@ def mine():
     elif not blockchain.valid_proof(json.dumps(blockchain.last_block, sort_keys=True).encode(), data["proof"]):
       return jsonify({"message": "Incorrect proof"}), 400
     blockchain.new_block(data["proof"])
-    return jsonify({"message": "success"}), 200
+    return jsonify({"message": "New Block Forged"}), 200
 
 
 @app.route('/chain', methods=['GET'])
