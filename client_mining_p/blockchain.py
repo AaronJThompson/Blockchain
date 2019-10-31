@@ -114,7 +114,7 @@ def mine():
       return jsonify({"message": "Previous hash does not match"}), 400
     elif not blockchain.valid_proof(json.dumps(blockchain.last_block, sort_keys=True).encode(), data["proof"]):
       return jsonify({"message": "Incorrect proof"}), 400
-    blockchain.chain.append(data)
+    blockchain.new_block(data["proof"])
     return jsonify({"message": "success"}), 200
 
 
