@@ -32,7 +32,12 @@ def valid_proof(block_string, proof):
     correct number of leading zeroes.
     :return: True if the resulting hash is a valid proof, False otherwise
     """
-    pass
+    # set a guess
+    guess = f'{block_string}{proof}'.encode()
+    # hash the guess
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    # return guess validity
+    return guess_hash[:6] == "000000"
 
 
 if __name__ == '__main__':
